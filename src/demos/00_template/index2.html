@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>React - Template</title>
+    <script src="../../js/react.min.js"></script>
+    <script src="../../js/react-dom.min.js"></script>
+    <script src="../../js/browser.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+  <div style="background-color:blue;color:white;" id="buttonFunctions">
+
+  </div>
+
+  </div>
+  <h3>My List of Friends Below</h3>
+  <div id="example"></div>
+    
+    <div id="part"></div>
+
+
+  <script type="text/babel">
+
+  var Friends = React.createClass({
+      getInitialState: function(){
+          return {editing: false}
+      },
+      save: function(){
+          this.setState({editing : false});
+          var val = this.refs.newText.value;
+          console.log('Updated Text : '+val);
+      },
+      edit: function(){
+          this.setState({editing : true});
+          
+      },
+      remove: function(){
+      },
+      
+      renderEdit: function(){
+          return (
+          <div>
+              <textarea defaultValue={this.props.children} ref='newText' ></textarea>
+              <button onClick={this.save} >Save</button>
+              <button>Remove</button>
+        </div>);
+      },
+      renderNormal: function(){
+          return (
+          <div>
+              <h2>{this.props.children} </h2>
+              <button onClick={this.edit} >Edit</button>
+              <button>Remove</button>
+        </div>);
+      },
+      
+      render: function(){
+          /*return (
+          <div>
+            <h4>Name : {this.props.children} </h4>  
+              <button>Edit</button>
+              <button>Save</button>
+              <button>Remove</button>
+        </div>);*/
+          if(this.state.editing){
+              return this.renderEdit();
+          }else{
+              return this.renderNormal();
+          }
+      }
+  });
+/*ReactDOM.render(<div>
+        <Friends>Harkishen</Friends>
+        <Friends>Anirudh</Friends>
+        <Friends>Subham Mishra</Friends>
+      </div>, document.getElementById('example'));*/
+
+var Board = React.createClass({
+    getInitialState: function(){
+        return {friends:[
+            'Harkishen Singh',
+            'Subham Mishra',
+            'Anirudh',
+            'Jyoti Prakash'
+        ]};
+    },
+    render: function(){
+        return (<div>
+        {
+          this.state.friends.map(function(names, i){
+            return (<Friends key={i} index={i} >{names}</Friends>);
+        })  
+        }</div>
+        );
+    }
+});
+
+ReactDOM.render(<Board />, document.getElementById('example'));
+
+
+
+
+  </script>
+</body>
+</html>
