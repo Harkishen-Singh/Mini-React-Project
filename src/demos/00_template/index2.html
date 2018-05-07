@@ -18,7 +18,7 @@
   </div>
   <h3>My List of Friends Below</h3>
   <div id="example"></div>
-    
+
     <div id="part"></div>
 
 
@@ -30,22 +30,22 @@
       },
       save: function(){
           this.setState({editing : false});
-          var val = this.refs.newText.value;
-          console.log('Updated Text : '+val);
+          this.props.updateCom(this.refs.newText.value, this.props.index);
       },
       edit: function(){
           this.setState({editing : true});
-          
+          /*this.props.updateCom(this.refs.newText.value, this.props.index);*/
       },
       remove: function(){
+        this.setState({editing: false});
+        this.props.popCom(this.props.index);
       },
-      
+
       renderEdit: function(){
           return (
           <div>
               <textarea defaultValue={this.props.children} ref='newText' ></textarea>
               <button onClick={this.save} >Save</button>
-              <button>Remove</button>
         </div>);
       },
       renderNormal: function(){
@@ -53,14 +53,14 @@
           <div>
               <h2>{this.props.children} </h2>
               <button onClick={this.edit} >Edit</button>
-              <button>Remove</button>
+              <button onClick={this.remove} >Remove</button>
         </div>);
       },
-      
+
       render: function(){
           /*return (
           <div>
-            <h4>Name : {this.props.children} </h4>  
+            <h4>Name : {this.props.children} </h4>
               <button>Edit</button>
               <button>Save</button>
               <button>Remove</button>
@@ -85,14 +85,32 @@ var Board = React.createClass({
             'Subham Mishra',
             'Anirudh',
             'Jyoti Prakash'
-        ]};
+        ]}
+    },
+    appendc:function (v,i) {
+      var arr = this.state.friends;
+      arr.push(v);
+      this.setState({friends: arr});
+      console.log('Appended the stack at index '+i);
+    },
+    updateStack: function (v,i) {
+      var arr = this.state.friends;
+      arr[i] = v;
+      this.setState({friends: arr});
+    },
+    pop: function (i) {
+      var arr = this.state.friends;
+      arr.splice(i,1);
+      this.setState({friends:arr});
+    },
+    eachComponent: function (text,i) {
+          return (<Friends key={i} index={i} appendCom={this.appendc} popCom={this.pop} updateCom={this.updateStack} >{text}</Friends>);
     },
     render: function(){
         return (<div>
         {
-          this.state.friends.map(function(names, i){
-            return (<Friends key={i} index={i} >{names}</Friends>);
-        })  
+          this.state.friends.map(this.eachComponent)
+
         }</div>
         );
     }

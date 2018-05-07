@@ -8,7 +8,6 @@
     <script src="../../js/react-dom.min.js"></script>
     <script src="../../js/browser.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/main.css" />
-    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
   <div style="background-color:blue;color:white;" id="buttonFunctions">
@@ -30,57 +29,29 @@
       }
     });
     var Friends = React.createClass({
-      getInitialState: function () {
-        return {editing: false}
-      },
       about: function () {
         alert('About Clicked');
       },
-      edit: function () {
-        this.setState({editing : true});
-      },
-      save:function () {
-        this.setState({editing: false});
-        var value = this.refs.newText.value;
-        console.log('Updated text : ' + value);
-      },
-      renderEditing: function () {
-        return (
-          <div>
-            <h4 >Name : {this.props.name}</h4>
-            <h5>College : {this.props.clg} Branch : {this.props.br}</h5>
-            <p>About : {this.props.about} </p>
-
-            <textarea ref='newText' defaultValue={this.props.about}></textarea>
-            <button onClick={this.save}> Save</button><br/><hr/>
-          </div>
-        );
-      },
-      renderNormal: function () {
-
+      render: function() {
         return (
           <div>
             <h4>Name : {this.props.name}</h4>
             <h5>College : {this.props.clg} Branch : {this.props.br}</h5>
             <p>About : {this.props.about} </p>
-
-            <button onClick={this.edit}> edit</button>
+            <button onClick={this.about}>About</button>
           </div>
         );
-      },
-      render: function() {
-        if(this.state.editing){
-          return this.renderEditing();
-        }else {
-          return this.renderNormal();
-        }
       }
     });
-    ReactDOM.render(<div className="friendsBlock"> <Mine />
+
+
+    ReactDOM.render(<div> <Mine />
       <Friends name='Anirudh' clg="Amrita Univesity" br='CSE' about="Very good boy"/>
       <Friends name='Subham Mishra' clg="CET bhubaneswar" br='CSE' about='Good friend' />
       <Friends name='Jyoti Prakash' clg='CET bhubaneswar' br='CSE' about='An asshole man, the kanpelu' />
         </div>, document.getElementById('example'));
+
+
       var Boxes = React.createClass({
         Add: function () {
           alert('Add button clicked!');
@@ -88,6 +59,7 @@
         Delete : function () {
           alert('Delete button clicked!');
         },
+
         render : function () {
           return (
             <div>
@@ -130,10 +102,11 @@
           }
         });
         ReactDOM.render(<StateVar />, document.getElementById('states'));
-    
+        
 
 
 
   </script>
+  
 </body>
 </html>
